@@ -22,6 +22,7 @@ gem 'sqlite3'
 #  gem 'uglifier', '>= 1.0.3'
 #end
 gem 'goliath'
+gem 'em-http-request'
 
 group :development, :test do
   #gem 'factory_girl_rails'
