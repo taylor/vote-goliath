@@ -28,10 +28,30 @@ class TestSpecs < MiniTest::Unit::TestCase
   end
 end
 
-#require 'goliath'
+require 'goliath/test_helper' 
+require 'test/unit'
 
-#class Hello < Goliath::API
-#  def response(env)
-#    [200, {}, "Hello World"]
-#  end
-#end
+class PluralVote < Goliath::API
+  use Goliath::Rack::Params
+
+  def response(env)
+		tally = PluralityVote.new(env.params['votes']) 
+    [200, {}, tally.result.winners[0]]
+  end
+end
+
+class PluralVoteTest < Test::Unit::TestCase
+  include Goliath::TestHelper
+
+  def setup
+    @err = Proc.new { assert false, "API request failed" }
+  end
+
+  def test_query_plurality_vote
+    with_api(PluralVote) do
+      get_request({:query => {:votes => ['torchies','torchies','torchies','houndstoothe','bennus','flightpath', 'pacha']}}, @err) do |c|
+        assert_equal 'torchies', c.response
+      end
+    end
+  end
+end
