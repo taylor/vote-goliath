@@ -1,1 +1,1 @@
-rvm use ruby-2.0.0-p195@vote-goliath --create
+rvm use ruby-2.0.0@vote-goliath --create

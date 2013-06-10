@@ -1,0 +1,3 @@
+[submodule "lib/rubyvote"]
+	path = lib/rubyvote
+	url = git@bitbucket.org:wwatson/rubyvote.git
