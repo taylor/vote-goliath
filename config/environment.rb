@@ -10,3 +10,5 @@ vendor_path = Dir.chdir(script_path + '/../vendor') { Dir.pwd }
 
 $:.unshift lib_path
 Dir["#{vendor_path}/*/lib"].map { |l| $:.unshift(l) if File.directory?(l) }
+
+require 'yajl' if RUBY_PLATFORM != 'java'
