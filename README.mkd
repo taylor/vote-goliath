@@ -8,3 +8,17 @@
 git submodule init
 git submodule update
 ```
+
+## Useful links
+https://github.com/postrank-labs/goliath/wiki
+https://github.com/igrigorik/em-http-request/wiki/Issuing-Requests
+https://github.com/postrank-labs/goliath/blob/e832599bf1976895c4f45354624e6aff790ba3f8/examples/grape/server.rb
+https://github.com/postrank-labs/goliath/blob/master/lib/goliath/test_helper.rb
+https://github.com/postrank-labs/goliath/blob/master/spec/unit/request_spec.rb
+https://github.com/intridea/grape
+https://github.com/grempe/grape_vs_goliath/blob/master/grape/config.ru
+http://stackoverflow.com/questions/15041777/testing-goliath-grape-with-rspec
+http://www.poweredbygamespy.com/2011/09/09/growing-pains-they-hurt-so-good/
+
+
+
