@@ -52,3 +52,4 @@ end
 
 
 gem 'yajl-ruby'
+gem 'grape'

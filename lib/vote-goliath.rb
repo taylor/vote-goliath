@@ -2,7 +2,40 @@
 
 require_relative '../config/environment.rb'
 
+require 'grape'
 require 'rubyvote'
+
+module Vote 
+  class API < Grape::API
+    version 'v1', :using => :path
+    format :json
+
+    resource 'plural' do
+      # TEST: curl -D - 'http://localhost:9000/v1/plural'
+      get '/' do
+            [ "The plurality voting system is a single-winner voting system often used to elect executive officers or to elect members of a legislative assembly which is based on single-member constituencies. -- http://en.wikipedia.org/wiki/Instant_Runoff_Voting",
+              "Try curl -D - 'http://localhost:9000/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka"]
+      end
+
+      # TEST: curl -D - 'http://localhost:9000/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka'
+      get '/:votes' do
+        votes=params['votes'].split(',')
+        tally = PluralityVote.new(votes)
+        tally.result.winners[0]
+      end
+    end
+  end
+end
+
+
+class APIServer < Goliath::API
+  def response(env)
+    Vote::API.call(env);
+  end
+end
+
+
+__END__
 
 require 'minitest/spec'
 require 'minitest/autorun'
