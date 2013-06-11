@@ -22,6 +22,7 @@ git submodule update
  * https://coderwall.com/p/kqip6a -- goliath + grape example server
  * https://github.com/grempe/grape_vs_goliath/blob/master/grape/config.ru
  * http://www.poweredbygamespy.com/2011/09/09/growing-pains-they-hurt-so-good/
+ * https://gist.github.com/mepatterson/5702783 -- M.E. Patterson goliath and grape example app
  * https://github.com/intridea/grape
 
 TESTING
