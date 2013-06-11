@@ -4,6 +4,10 @@ require_relative '../config/environment.rb'
 require 'rubyvote'
 require_relative '../server.rb'
 
+
+# Run tests unless in production -- allows starting in production with foreman start
+unless ENV['RACK_ENV'] == 'production'
+
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'minitest/pride'
@@ -50,4 +54,6 @@ class TestSpecs < MiniTest::Unit::TestCase
     vote_array = ['torchies','torchies','torchies','houndstoothe','bennus','flightpath', 'pacha']
     assert_equal( 'torchies', PluralityVote.new(vote_array).result.winners[0] )
   end
+end
+
 end
