@@ -6,6 +6,7 @@ require_relative "#{script_path}/config/environment.rb"
 require 'goliath'
 require 'grape'
 require 'rubyvote'
+require 'json'
 
 module Vote 
   class API < Grape::API
