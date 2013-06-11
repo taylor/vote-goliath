@@ -91,6 +91,7 @@ GEM
     sqlite3 (1.3.7)
     stringex (1.5.1)
     uuidtools (2.1.4)
+    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -101,3 +102,4 @@ DEPENDENCIES
   em-http-request
   goliath
   sqlite3
+  yajl-ruby

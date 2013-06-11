@@ -49,3 +49,6 @@ end
 
 
 # gem 'debugger'
+
+
+gem 'yajl-ruby'
