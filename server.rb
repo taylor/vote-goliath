@@ -22,8 +22,11 @@ module Vote
       # TEST: curl -D - 'http://localhost:9000/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka'
       get '/:votes' do
         votes=params['votes'].split(',')
+        votes.compact!
+        votes.reject! &:empty?
+        $stderr.puts votes.inspect
         tally = PluralityVote.new(votes)
-        tally.result.winners[0]
+        tally.result.winners
       end
     end
   end
@@ -35,8 +38,3 @@ class APIServer < Goliath::API
     Vote::API.call(env);
   end
 end
-
-
-__END__
-
-

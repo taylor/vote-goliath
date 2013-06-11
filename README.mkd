@@ -2,6 +2,10 @@
 
 ...
 
+## production
+
+RACK_ENV=production be foreman start
+
 ## Setup
 
 ```
