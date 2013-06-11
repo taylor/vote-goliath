@@ -30,12 +30,13 @@ end
 
 class APIServer < Goliath::API
   def response(env)
+    puts env 
     Vote::API.call(env);
   end
 end
 
 
-__END__
+#__END__
 
 require 'minitest/spec'
 require 'minitest/autorun'
@@ -43,26 +44,36 @@ require 'minitest/pride'
 require 'goliath/test_helper' 
 require 'test/unit'
 
-class PluralVote < Goliath::API
-  use Goliath::Rack::Params
+#class PluralVote < Goliath::API
+#  use Goliath::Rack::Params
+#
+#  def response(env)
+#		tally = PluralityVote.new(env.params['votes']) 
+#    [200, {}, tally.result.winners[0]]
+#  end
+#end
 
-  def response(env)
-		tally = PluralityVote.new(env.params['votes']) 
-    [200, {}, tally.result.winners[0]]
-  end
-end
-
-class PluralVoteTest < Test::Unit::TestCase
+class APIServerTest < Test::Unit::TestCase
   include Goliath::TestHelper
 
   def setup
     @err = Proc.new { assert false, "API request failed" }
   end
 
+  def test_root
+    with_api(APIServer) do
+      get_request({:path => '/v1/plural/'}, @err) do |c|
+        puts c.response
+        assert_match(/The plurality voting/, c.response)
+      end
+    end
+  end
+
   def test_query_plurality_vote
-    with_api(PluralVote) do
-      get_request({:query => {:votes => ['torchies','torchies','torchies','houndstoothe','bennus','flightpath', 'pacha']}}, @err) do |c|
-        assert_equal 'torchies', c.response
+    with_api(APIServer) do
+      get_request({:path => '/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka'}, @err) do |c|
+        puts c.response
+        assert_equal '"vuka"', c.response
       end
     end
   end
