@@ -25,7 +25,7 @@ class APIServerTest < Test::Unit::TestCase
   def test_root
     with_api(APIServer) do
       get_request({:path => '/v1/plural/'}, @err) do |c|
-        puts c.response
+        puts JSON.parse(c.response)
         assert_match(/The plurality voting/, c.response)
       end
     end
@@ -34,8 +34,9 @@ class APIServerTest < Test::Unit::TestCase
   def test_query_plurality_vote
     with_api(APIServer) do
       get_request({:path => '/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka'}, @err) do |c|
-        puts JSON.parse(c.response)
-        assert_equal 'vuka', JSON.parse(c.response).first
+        resp = JSON.parse(c.response)
+        puts resp
+        assert_equal 'vuka', resp.first
       end
     end
   end
@@ -43,12 +44,24 @@ class APIServerTest < Test::Unit::TestCase
   def test_query_plurality_vote_multiple_winners
     with_api(APIServer) do
       get_request({:path => '/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka,houndstooth'}, @err) do |c|
-        puts JSON.parse(c.response)
-        assert_equal 'houndstooth, vuka', JSON.parse(c.response).join(', ')
+        resp = JSON.parse(c.response)
+        puts resp
+        assert_equal 2, resp.size
+        assert_equal 'houndstooth, vuka', resp.join(', ')
       end
     end
   end
 
+  def test_query_ivr_vote
+    with_api(APIServer) do
+      votes=[["vuka","houndstooth"],["houndstooth","pacha"],["vuka","bennu"],["vuka","epoch"], ["flightpath", "vuka"]]
+      get_request({:path => "/v1/ivr/#{votes.to_json}"}, @err) do |c|
+        resp = JSON.parse(c.response)
+        puts resp
+        assert_equal 'vuka', resp.first
+      end
+    end
+  end
 end
 
 class TestSpecs < MiniTest::Unit::TestCase

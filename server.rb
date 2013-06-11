@@ -24,7 +24,27 @@ module Vote
         votes=params['votes'].split(',')
         votes.compact!
         votes.reject! &:empty?
+        return [] if votes.empty?
         tally = PluralityVote.new(votes)
+        tally.result.winners
+      end
+    end
+
+    # TODO: add alias to ivr as runoff
+    resource 'ivr' do
+      # TEST: curl -D - 'http://localhost:9000/v1/plural'
+      get '/' do
+            [ "Instant-runoff voting (IRV), alternative vote (AV), transferable vote, ranked choice voting, or preferential vote is an electoral system used to elect a single winner from a field of more than two candidates",
+              "Try curl -D - 'http://localhost:9000/v1/ivr/...."]
+      end
+
+      get '/:votes' do
+        # NOTE: expects json...
+        votes=JSON.parse(params['votes'])
+        votes.compact!
+        votes.reject! &:empty?
+        return [] if votes.empty?
+        tally = InstantRunoffVote.new(votes)
         tally.result.winners
       end
     end
