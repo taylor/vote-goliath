@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
 require_relative '../config/environment.rb'
-require 'rubyvote'
 require_relative '../server.rb'
+require 'rubyvote'
+require 'json'
 
 
 # Run tests unless in production -- allows starting in production with foreman start
@@ -33,11 +34,21 @@ class APIServerTest < Test::Unit::TestCase
   def test_query_plurality_vote
     with_api(APIServer) do
       get_request({:path => '/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka'}, @err) do |c|
-        puts c.response
-        assert_equal '"vuka"', c.response
+        puts JSON.parse(c.response)
+        assert_equal 'vuka', JSON.parse(c.response).first
       end
     end
   end
+
+  def test_query_plurality_vote_multiple_winners
+    with_api(APIServer) do
+      get_request({:path => '/v1/plural/houndstooth,houndstooth,pacha,vuka,vuka,vuka,houndstooth'}, @err) do |c|
+        puts JSON.parse(c.response)
+        assert_equal 'houndstooth, vuka', JSON.parse(c.response).join(', ')
+      end
+    end
+  end
+
 end
 
 class TestSpecs < MiniTest::Unit::TestCase

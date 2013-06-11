@@ -24,7 +24,6 @@ module Vote
         votes=params['votes'].split(',')
         votes.compact!
         votes.reject! &:empty?
-        $stderr.puts votes.inspect
         tally = PluralityVote.new(votes)
         tally.result.winners
       end
