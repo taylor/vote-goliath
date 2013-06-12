@@ -24,6 +24,7 @@ git submodule update
  * http://www.poweredbygamespy.com/2011/09/09/growing-pains-they-hurt-so-good/
  * https://gist.github.com/mepatterson/5702783 -- M.E. Patterson goliath and grape example app
  * https://github.com/intridea/grape
+ * http://www.igvita.com/2011/06/02/0-60-deploying-goliath-on-heroku-cedar/
 
 TESTING
  * https://github.com/postrank-labs/goliath/blob/master/lib/goliath/test_helper.rb
