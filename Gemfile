@@ -54,3 +54,4 @@ end
 gem 'yajl-ruby'
 gem 'grape'
 gem 'foreman'
+gem 'rake'
